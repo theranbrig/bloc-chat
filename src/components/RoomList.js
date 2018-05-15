@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { ListGroup, ListGroupItem, Form, FormControl } from 'react-bootstrap';
 
 class RoomList extends Component {
   constructor(props) {
     super(props);
     
     this.state = {
-      rooms: []
+      rooms: [],
+      newRoom: ''
     };
 
-    this.roomsRef = this.props.firebase.database().ref('rooms')
+    // Room reference and bind handlers
+    this.roomsRef = this.props.firebase.database().ref('rooms');
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   
   // Mount RoomList from firebase
@@ -19,10 +23,28 @@ class RoomList extends Component {
       room.key = snapshot.key;
       this.setState({ rooms: this.state.rooms.concat( room ) });
     });
-    
+  }
+
+  // Handle input change function
+  handleChange(e) {
+    this.setState({
+      newRoom: e.target.value
+    })
+  }
+
+  // Handle submit for new room
+  handleSubmit(e) {
+    e.preventDefault();
+    const room = {
+      name: this.state.newRoom
+    }
+    this.roomsRef.push(room);
+    this.setState({
+      newRoom: ''
+    })
   }
   
-  // Create Room List
+  // Create room list
   render() {
     return (
       <div>
@@ -34,6 +56,10 @@ class RoomList extends Component {
             )
           }
         </ListGroup>
+        <Form onSubmit={ this.handleSubmit }>
+          <FormControl type='text' name='newRoom' placeholder='New Chat Room' onChange={ this.handleChange } value={ this.state.newRoom }/>
+          <FormControl type='submit'/>
+        </Form>
       </div>
     )
   }
