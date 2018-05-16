@@ -9,7 +9,7 @@ class RoomList extends Component {
       rooms: [],
       newRoom: ''
     };
-
+    
     // Room reference and bind handlers
     this.roomsRef = this.props.firebase.database().ref('rooms');
     this.handleChange = this.handleChange.bind(this);
@@ -26,6 +26,7 @@ class RoomList extends Component {
   }
 
   // Handle input change function
+
   handleChange(e) {
     this.setState({
       newRoom: e.target.value
@@ -33,6 +34,7 @@ class RoomList extends Component {
   }
 
   // Handle submit for new room
+
   handleSubmit(e) {
     e.preventDefault();
     const room = {
@@ -52,7 +54,7 @@ class RoomList extends Component {
         <ListGroup>
           {
             this.state.rooms.map( (room, index) => 
-              <ListGroupItem key={index}>{room.name}</ListGroupItem>
+              <ListGroupItem key={index} onClick={ (e) => this.props.selectRoom(room) }>{ room.name }</ListGroupItem>
             )
           }
         </ListGroup>

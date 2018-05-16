@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import * as firebase from 'firebase'
 import RoomList from './components/RoomList'
+import MessageList from './components/MessageList'
 import { Grid, Col, Row } from "react-bootstrap";
 
 // Firebase initialization
@@ -17,6 +18,20 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeRoom: ''
+    }
+  }
+  
+  selectRoom(room) {
+    this.setState({
+      activeRoom: room
+    });
+    console.log(this.state.activeRoom);
+  }
+
   render() {
     return (
       <div className="App">
@@ -25,12 +40,11 @@ class App extends Component {
           <Row>
           {/* Room List Area */}
             <Col sm={6} md={4}>
-              <RoomList firebase={firebase}/>
+              <RoomList firebase={firebase} activeRoom={ this.state.activeRoom } selectRoom={ this.selectRoom.bind(this) }/>
             </Col>
           {/* Chat Area */}
             <Col xs={12} md={8}>
-              <h2>Chat Area</h2>
-              <p>Place holder area for now.  Chats will go here.</p>
+              <MessageList firebase={firebase} activeRoom={ this.state.activeRoom }/>
             </Col>
           </Row>
         </Grid>
