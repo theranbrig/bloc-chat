@@ -3,6 +3,7 @@ import './App.css';
 import * as firebase from 'firebase'
 import RoomList from './components/RoomList'
 import MessageList from './components/MessageList'
+import User from "./components/User";
 import { Grid, Col, Row } from "react-bootstrap";
 
 // Firebase initialization
@@ -18,18 +19,24 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      activeRoom: ''
+      activeRoom: '',
+      user: ''
     }
   }
-  
+
   selectRoom(room) {
     this.setState({
       activeRoom: room
     });
-    console.log(this.state.activeRoom);
+  }
+
+  setUser(user) {
+    this.setState({
+      user: user
+    })
   }
 
   render() {
@@ -38,13 +45,28 @@ class App extends Component {
         <h1>Bloc Chat</h1>
         <Grid>
           <Row>
+            <User 
+              firebase={firebase} 
+              setUser={ this.setUser.bind(this) } 
+              currentUser={ this.state.user === null ? 'Guest' : this.state.user.displayName } 
+              user={ this.state.user }
+            />
+          </Row>
+          <Row>
           {/* Room List Area */}
             <Col sm={6} md={4}>
-              <RoomList firebase={firebase} activeRoom={ this.state.activeRoom } selectRoom={ this.selectRoom.bind(this) }/>
+              <RoomList 
+              firebase={firebase} 
+              activeRoom={ this.state.activeRoom } 
+              selectRoom={ this.selectRoom.bind(this) }
+            />
             </Col>
           {/* Chat Area */}
             <Col xs={12} md={8}>
-              <MessageList firebase={firebase} activeRoom={ this.state.activeRoom }/>
+              <MessageList 
+                firebase={firebase} 
+                activeRoom={ this.state.activeRoom }
+              />
             </Col>
           </Row>
         </Grid>

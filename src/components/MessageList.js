@@ -10,13 +10,15 @@ class MessageList extends Component {
     }
     this.messagesRef = this.props.firebase.database().ref( 'messages' );
   }
-  
+
   // Update active room message list
+  
   updateActiveMessages(activeRoomKey) {
     this.setState({ activeMessages: this.state.messages.filter( message => message.roomId === activeRoomKey ) });
   }
 
   // Mount messages from database
+
   componentDidMount() {
     this.messagesRef.on('child_added', snapshot => {
       const message = snapshot.val();
@@ -26,6 +28,7 @@ class MessageList extends Component {
   }
 
   // Update props for new active room
+
   componentWillUpdate(newProps){
     if(this.props !== newProps) {
       this.updateActiveMessages(newProps.activeRoom.key);
