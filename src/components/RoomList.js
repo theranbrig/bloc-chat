@@ -54,12 +54,20 @@ class RoomList extends Component {
         <ListGroup>
           {
             this.state.rooms.map( (room, index) => 
-              <ListGroupItem key={index} onClick={ (e) => this.props.selectRoom(room) }>{ room.name }</ListGroupItem>
+              <ListGroupItem 
+                key={index} 
+                onClick={ (e) => this.props.selectRoom(room) }
+              >
+                { room.name }
+              </ListGroupItem>
             )
           }
         </ListGroup>
         <Form onSubmit={ this.handleSubmit }>
-          <FormControl type='text' name='newRoom' placeholder='New Chat Room' onChange={ this.handleChange } value={ this.state.newRoom }/>
+          <FormControl type='text' name='newRoom' placeholder='New Chat Room' 
+            onChange={ this.handleChange } 
+            value={ this.state.newRoom }
+          />
           <FormControl type='submit'/>
         </Form>
       </div>
