@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Form, FormControl } from 'react-bootstrap';
+import { Panel, ListGroup, ListGroupItem, Form, FormControl, Button } from 'react-bootstrap';
 
 class RoomList extends Component {
   constructor(props) {
@@ -7,7 +7,7 @@ class RoomList extends Component {
     
     this.state = {
       rooms: [],
-      newRoom: ''
+      newRoom: '',
     };
     
     // Room reference and bind handlers
@@ -50,26 +50,33 @@ class RoomList extends Component {
   render() {
     return (
       <div>
-        <h2>Chat Rooms</h2>
-        <ListGroup>
-          {
-            this.state.rooms.map( (room, index) => 
-              <ListGroupItem 
-                key={index} 
-                onClick={ (e) => this.props.selectRoom(room) }
-              >
-                { room.name }
-              </ListGroupItem>
-            )
-          }
-        </ListGroup>
-        <Form onSubmit={ this.handleSubmit }>
-          <FormControl type='text' name='newRoom' placeholder='New Chat Room' 
-            onChange={ this.handleChange } 
-            value={ this.state.newRoom }
-          />
-          <FormControl type='submit'/>
-        </Form>
+        <Panel bsStyle='primary' className='chatRoomArea'>
+          <Panel.Heading>
+            <Panel.Title componentClass="h3">Chat Rooms</Panel.Title>
+          </Panel.Heading>
+          <Panel.Body>
+            <ListGroup id='roomList'>
+              {
+                this.state.rooms.map( (room, index) => 
+                  <ListGroupItem 
+                    key={index} 
+                    onClick={ (e) => this.props.selectRoom(room) }
+                    className='roomItem'
+                  >
+                    { room.name }
+                  </ListGroupItem>
+                )
+              }
+            </ListGroup>
+            <Form className='submitRoomArea' onSubmit={ this.handleSubmit }>
+              <FormControl type='text' name='newRoom' placeholder='New Chat Room' 
+                onChange={ this.handleChange } 
+                value={ this.state.newRoom }
+              />
+              <Button type='submit' bsStyle='primary' block>Add Room</Button>
+            </Form>
+          </Panel.Body>
+        </Panel>
       </div>
     )
   }
