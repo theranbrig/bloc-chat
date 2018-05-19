@@ -31,8 +31,11 @@ class User extends Component {
           <h4>User: { this.props.currentUser }</h4>
         </Row>
         <Row>
-          <Button onClick={ this.signOut.bind(this) }>Sign Out</Button>
-          <Button onClick={ this.signIn.bind(this) }>Sign In</Button>
+          {this.props.user === null ?
+          <Button bsStyle='primary' onClick={ this.signIn.bind(this) }>Sign In</Button>
+          :
+          <Button bsStyle='primary' onClick={ this.signOut.bind(this) }>Sign Out</Button>
+          }
         </Row>
       </Grid>
     )
