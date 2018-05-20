@@ -12,25 +12,31 @@ class MessageList extends Component {
       newMessageContent: '',
       show: true
     }
-    this.messagesRef = this.props.firebase.database().ref( 'messages' );
+    this.messagesRef = this.props.firebase.database().ref( `messages` );
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  // Update active room message list
-  
-  updateActiveMessages(activeRoomKey) {
-    this.setState({ activeMessages: this.state.messages.filter( message => message.roomId === activeRoomKey ) });
   }
 
   // Mount messages from database
 
   componentDidMount() {
-    this.messagesRef.on('child_added', snapshot => {
-      const message = snapshot.val();
-      message.key = snapshot.key;
-      this.setState( { messages: this.state.messages.concat( message ), activeMessages: this.state.activeMessages.concat( message ) } );
-    });
+    this.messagesRef.on('value', snapshot => {
+      const messageChanges = [];
+      snapshot.forEach((message) => {
+        messageChanges.push({
+          message: message.key,
+          content: message.val().content,
+          roomId: message.val().roomId,
+          username: message.val().username,
+          sentAt: message.val().sentAt
+        })
+      })
+      this.setState({
+        messages: messageChanges,
+        activeMessages: this.state.messages.filter( message => message.roomId === this.props.activeRoom.key ) 
+      })
+    })
+    this.messagesEnd.scrollIntoView()
   }
 
   // Update props for new active room
@@ -39,7 +45,10 @@ class MessageList extends Component {
     if(this.props !== newProps) {
       this.updateActiveMessages(newProps.activeRoom.key);
     }
+    console.log(newProps);
   }
+
+  // Send new message handlers
 
   handleChange(e) {
     this.setState({
@@ -49,22 +58,35 @@ class MessageList extends Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    const newMessage = {
-      content: this.state.newMessageContent,
-      username: this.props.currentUser,
-      roomId: this.props.activeRoom.key,
-      sentAt: this.props.firebase.database.ServerValue.TIMESTAMP
+    if(this.state.newMessageContent.length > 0) {
+      const newMessage = {
+        content: this.state.newMessageContent,
+        username: this.props.currentUser,
+        roomId: this.props.activeRoom.key,
+        sentAt: this.props.firebase.database.ServerValue.TIMESTAMP
+      }
+      this.messagesRef.push(newMessage);
+      this.setState({
+        newMessageContent: ''
+      })
+      this.scrollToBottom();
     }
-    this.messagesRef.push(newMessage);
-    this.setState({
-      newMessageContent: ''
-    })
+  }
+
+  // Update active room message list
+  
+  updateActiveMessages(activeRoomKey) {
+    this.setState({ activeMessages: this.state.messages.filter( message => message.roomId === activeRoomKey ) });
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView()
   }
 
   render() {
     return (
       <div>
-        <Panel bsStyle='primary'>
+        <Panel bsStyle='primary' className='wholeMessageArea'>
           <Panel.Heading>
           <Panel.Title componentClass='h3'>
             { this.props.activeRoom === '' ? 'Welcome to Bloc Chat' : this.props.activeRoom.name }
@@ -76,14 +98,28 @@ class MessageList extends Component {
                 <Well className='noRoomSelected'>No Room Selected</Well>
                 :
                 this.state.activeMessages.map( ( message, index ) => 
-                  <ListGroupItem key={index} header={ message.content }>{ message.username } - { moment(message.sentAt).fromNow() }</ListGroupItem>
+                  <ListGroupItem 
+                    key={index} 
+                    header={ message.content }
+                  >
+                    { message.username } - { moment(message.sentAt).fromNow() }
+                  </ListGroupItem>
                 )
               }
+              <div style={{ float:"left", clear: "both" }}
+                ref={(el) => { this.messagesEnd = el; }}>
+              </div>
             </ListGroup>
             <Form>
               <FormGroup className='submitMessageArea'>
                 <FormControl type='text' placeholder='Enter Message' onChange={ this.handleChange } value={ this.state.newMessageContent }/>
-                <Button type='submit' onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow } bsStyle='primary' block>Send</Button>
+                <Button 
+                  type='submit' 
+                  onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow } 
+                  bsStyle='primary' block
+                >
+                  <i className="fas fa-paper-plane"></i> Send
+                </Button>
               </FormGroup>
             </Form>
           </Panel.Body>
