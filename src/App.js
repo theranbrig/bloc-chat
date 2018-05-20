@@ -43,21 +43,22 @@ class App extends Component {
     return (
       <div className="App">
         
-        <Grid>
+        <Grid fluid>
           <Row>
             <Jumbotron>
               <h1>Bloc Chat</h1>
-              <User 
-                  firebase={firebase} 
-                  setUser={ this.setUser.bind(this) } 
-                  currentUser={ this.state.user === null ? 'Guest' : this.state.user.displayName } 
-                  user={ this.state.user }
-                />
+              
             </Jumbotron>
           </Row>
           <Row className='mainContentArea'>
           {/* Room List Area */}
-            <Col sm={6} lg={4}>
+            <Col xs={12} lg={3}>
+              <User 
+                firebase={firebase} 
+                setUser={ this.setUser.bind(this) } 
+                currentUser={ this.state.user === null ? 'Guest' : this.state.user.displayName } 
+                user={ this.state.user }
+              />
               <RoomList 
               firebase={firebase} 
               activeRoom={ this.state.activeRoom } 
@@ -65,7 +66,7 @@ class App extends Component {
             />
             </Col>
           {/* Chat Area */}
-            <Col xs={12} lg={8}>
+            <Col xs={12} lg={9}>
               <MessageList 
                 firebase={firebase} 
                 activeRoom={ this.state.activeRoom }

@@ -18,11 +18,18 @@ class RoomList extends Component {
   
   // Mount RoomList from firebase
   componentDidMount() {
-    this.roomsRef.on('child_added', snapshot => {
-      const room = snapshot.val();
-      room.key = snapshot.key;
-      this.setState({ rooms: this.state.rooms.concat( room ) });
-    });
+    this.roomsRef.on('value', snapshot => {
+      const roomChanges = [];
+      snapshot.forEach((room) => {
+        roomChanges.push({
+          key: room.key,
+          name: room.val().name
+        })
+      })
+      this.setState({
+        rooms: roomChanges
+      })
+    })
   }
 
   // Handle input change function
@@ -45,6 +52,17 @@ class RoomList extends Component {
       newRoom: ''
     })
   }
+
+  handleDelete(itemId) {
+    console.log(itemId);
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      this.roomsRef.child(itemId).remove(function(error) {
+        if (error) {
+          console.log(error);
+        }
+      });
+    }
+  }
   
   // Create room list
   render() {
@@ -63,7 +81,8 @@ class RoomList extends Component {
                     onClick={ (e) => this.props.selectRoom(room) }
                     className='roomItem'
                   >
-                    { room.name }
+                  <span onClick={ () => this.handleDelete( room.key ) }><i className='fas fa-times-circle'></i></span>
+                  { room.name }
                   </ListGroupItem>
                 )
               }
@@ -73,7 +92,7 @@ class RoomList extends Component {
                 onChange={ this.handleChange } 
                 value={ this.state.newRoom }
               />
-              <Button type='submit' bsStyle='primary' block>Add Room</Button>
+              <Button type='submit' bsStyle='primary' block><i className="fas fa-plus-circle"></i> Add Room</Button>
             </Form>
           </Panel.Body>
         </Panel>

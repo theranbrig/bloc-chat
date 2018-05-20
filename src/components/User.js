@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 
 class User extends Component {
   
@@ -26,18 +26,18 @@ class User extends Component {
 
   render() {
     return (
-      <Grid>
+      <div className='userInfo'>
         <Row>
-          <h4>User: { this.props.currentUser }</h4>
+          <h4>Welcome: { this.props.currentUser }</h4>
         </Row>
         <Row>
           {this.props.user === null ?
-          <Button bsStyle='primary' onClick={ this.signIn.bind(this) }>Sign In</Button>
+          <Button bsStyle='primary' onClick={ this.signIn.bind(this) }><i className="fas fa-user"></i> Sign In</Button>
           :
-          <Button bsStyle='primary' onClick={ this.signOut.bind(this) }>Sign Out</Button>
+          <Button bsStyle='primary' onClick={ this.signOut.bind(this) }><i className="fas fa-sign-out-alt"></i> Sign Out</Button>
           }
         </Row>
-      </Grid>
+      </div>
     )
   }
 }
