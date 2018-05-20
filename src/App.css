@@ -55,7 +55,8 @@
 }
 
 .jumbotron {
-    padding: 0 6px 6px 6px;
+    padding: 0px;
+    background: none;
 }
 
 .deleteButton {
@@ -67,21 +68,34 @@
 }
 
 button.roomItem span {
-    color: red;
-    margin-right: 20px;
+    margin-right: 4px;
     text-align: center;
     width: 0;
-    display: inline-block;
+    display: inline-flex;
     transition: 0.3s linear;
     opacity: 0;
 }
 
+.fa-times-circle {
+    color: red;
+}
+
+.fa-edit {
+    color: cornflowerblue;
+}
+
 button.roomItem:hover span {
     display: inline-block;
-    width: 30px;
+    width: 20px;
     opacity: 1;
 }
 
 .userInfo {
     padding: 8px 0;
+}
+
+.list-group-item {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }

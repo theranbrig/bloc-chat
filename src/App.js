@@ -45,8 +45,8 @@ class App extends Component {
         
         <Grid fluid>
           <Row>
-            <Jumbotron>
-              <h1>Bloc Chat</h1>
+            <Jumbotron bsClass='primay'>
+              <h1><i className="far fa-comment"></i> Bloc Chat</h1>
               
             </Jumbotron>
           </Row>

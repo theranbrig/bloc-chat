@@ -32,9 +32,9 @@ class User extends Component {
         </Row>
         <Row>
           {this.props.user === null ?
-          <Button bsStyle='primary' onClick={ this.signIn.bind(this) }><i className="fas fa-user"></i> Sign In</Button>
+          <Button bsStyle='info' onClick={ this.signIn.bind(this) }><i className="fas fa-user"></i> Sign In</Button>
           :
-          <Button bsStyle='primary' onClick={ this.signOut.bind(this) }><i className="fas fa-sign-out-alt"></i> Sign Out</Button>
+          <Button bsStyle='info' onClick={ this.signOut.bind(this) }><i className="fas fa-sign-out-alt"></i> Sign Out</Button>
           }
         </Row>
       </div>
