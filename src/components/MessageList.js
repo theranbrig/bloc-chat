@@ -46,8 +46,13 @@ class MessageList extends Component {
       this.updateActiveMessages(newProps.activeRoom.key);
     }
     console.log(newProps);
+    this.messagesEnd.scrollIntoView();
   }
 
+  componentDidUpdate() {
+    this.messagesEnd.scrollIntoView();
+  }
+  
   // Send new message handlers
 
   handleChange(e) {
@@ -86,7 +91,7 @@ class MessageList extends Component {
   render() {
     return (
       <div>
-        <Panel bsStyle='primary' className='wholeMessageArea'>
+        <Panel bsStyle='info' className='wholeMessageArea'>
           <Panel.Heading>
           <Panel.Title componentClass='h3'>
             { this.props.activeRoom === '' ? 'Welcome to Bloc Chat' : this.props.activeRoom.name }
@@ -116,7 +121,7 @@ class MessageList extends Component {
                 <Button 
                   type='submit' 
                   onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow } 
-                  bsStyle='primary' block
+                  bsStyle='info' block
                 >
                   <i className="fas fa-paper-plane"></i> Send
                 </Button>
