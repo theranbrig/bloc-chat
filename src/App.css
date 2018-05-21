@@ -1,5 +1,7 @@
 .App {
     text-align: center;
+    margin: 0 auto;
+    /* background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); */
 }
 
 .App-logo {
@@ -37,12 +39,8 @@
 }
 
 #messageList {
-    height: 490px;
+    height: 514px;
     overflow-y: scroll;
-}
-
-.wholeMessageArea {
-    height: 648px;
 }
 
 .noRoomSelected {
@@ -50,24 +48,15 @@
     font-size: 2em;
 }
 
-.mainContentArea {
-    padding-top: 20px;
+.MuiGrid-spacing-xs-8-22>.MuiGrid-item-2 {
+    margin-top: 50px;
 }
 
-.jumbotron {
-    padding: 0px;
-    background: none;
+.fas {
+    margin-right: 5px;
 }
 
-.deleteButton {
-    display: none;
-}
-
-.fa-camera-retro {
-    text-align-last: right;
-}
-
-button.roomItem span {
+.roomItem>span {
     margin-right: 4px;
     text-align: center;
     width: 0;
@@ -76,15 +65,16 @@ button.roomItem span {
     opacity: 0;
 }
 
+.fa-comment,
 .fa-times-circle {
-    color: red;
+    color: #e91e63 !important;
 }
 
 .fa-edit {
-    color: cornflowerblue;
+    color: #00bcd4;
 }
 
-button.roomItem:hover span {
+.roomItem:hover>span {
     display: inline-block;
     width: 20px;
     opacity: 1;
@@ -98,4 +88,24 @@ button.roomItem:hover span {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.classListField,
+.classListButton,
+.messageButton {
+    width: 100%;
+}
+
+/* .MuiButton-flatPrimary-155,
+.MuiButton-root-153 {
+    color: #00bcd4 !important;
+}
+
+.MuiAppBar-colorPrimary-98 {
+    background-color: #00bcd4 !important;
+    color: #ff4081
+} */
+
+.MuiInput-input-195 {
+    margin-left: 10px !important;
 }
