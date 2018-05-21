@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Panel, ListGroup, ListGroupItem, Form, FormGroup, FormControl, Button, Well } from "react-bootstrap";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
 import * as moment from 'moment';
 
 class MessageList extends Component {
@@ -36,7 +42,6 @@ class MessageList extends Component {
         activeMessages: this.state.messages.filter( message => message.roomId === this.props.activeRoom.key ) 
       })
     })
-    this.messagesEnd.scrollIntoView()
   }
 
   // Update props for new active room
@@ -46,7 +51,6 @@ class MessageList extends Component {
       this.updateActiveMessages(newProps.activeRoom.key);
     }
     console.log(newProps);
-    this.messagesEnd.scrollIntoView();
   }
 
   componentDidUpdate() {
@@ -91,45 +95,65 @@ class MessageList extends Component {
   render() {
     return (
       <div>
-        <Panel bsStyle='info' className='wholeMessageArea'>
-          <Panel.Heading>
-          <Panel.Title componentClass='h3'>
-            { this.props.activeRoom === '' ? 'Welcome to Bloc Chat' : this.props.activeRoom.name }
-          </Panel.Title>
-          </Panel.Heading>
-          <Panel.Body>
-            <ListGroup id='messageList'>
+        <div className='wholeMessageArea'>
+          <div>
+            <Typography 
+              variant="headline" 
+              color='secondary' 
+              component='h2'>
+              { this.props.activeRoom === '' ? 'Choose a room to get started chatting.' : this.props.activeRoom.name }
+            </Typography>
+          </div>
+          <div>
+            <List id='messageList'>
               { this.props.activeRoom === '' ?
-                <Well className='noRoomSelected'>No Room Selected</Well>
+                <Typography 
+                  component='h3' 
+                  variant='headline' 
+                  color='secondary' 
+                  className='noRoomSelected'>
+                  No Room Selected
+                </Typography>
                 :
                 this.state.activeMessages.map( ( message, index ) => 
-                  <ListGroupItem 
+                  <ListItem
                     key={index} 
-                    header={ message.content }
                   >
-                    { message.username } - { moment(message.sentAt).fromNow() }
-                  </ListGroupItem>
+                  <ListItemText 
+                    primary={ message.content } 
+                    secondary={ message.username }>
+                  </ListItemText>
+                  <Chip label={ moment(message.sentAt).format('LLL') }></Chip>
+                  </ListItem>
                 )
               }
               <div style={{ float:"left", clear: "both" }}
                 ref={(el) => { this.messagesEnd = el; }}>
               </div>
-            </ListGroup>
-            <Form>
-              <FormGroup className='submitMessageArea'>
-                <FormControl type='text' placeholder='Enter Message' onChange={ this.handleChange } value={ this.state.newMessageContent }/>
+            </List>
+            <div>
+              <form className='submitMessageArea'>
+                <TextField 
+                  type='text'
+                  placeholder='Enter Message' 
+                  onChange={ this.handleChange } 
+                  value={ this.state.newMessageContent }
+                  className='messageInput'
+                  fullWidth
+                />
                 <Button 
                   type='submit' 
-                  onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow } 
-                  bsStyle='info' block
+                  onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow }
+                  variant="raised" 
+                  color="primary"
+                  className='messageButton'
                 >
                   <i className="fas fa-paper-plane"></i> Send
                 </Button>
-              </FormGroup>
-            </Form>
-          </Panel.Body>
-        </Panel>
-        
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

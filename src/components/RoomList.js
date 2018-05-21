@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { Panel, ListGroup, ListGroupItem, Form, FormControl, Button } from 'react-bootstrap';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class RoomList extends Component {
   constructor(props) {
@@ -103,6 +108,7 @@ class RoomList extends Component {
   render() {
 
     // Edit form buttons and input change
+
     const editMode = this.state.editMode;
     const editButton = editMode ? (
       <span onClick={this.hideEditButton}><i className="fas fa-ban"></i></span>
@@ -110,50 +116,55 @@ class RoomList extends Component {
       <span onClick={ this.showEditButton }><i className='fas fa-edit'></i></span>
     )
     const editForm = editMode ? (
-      <Form className='submitRoomArea' onSubmit={this.handleEditSubmit}>
-        <FormControl type='text' name='newRoom' placeholder='Edit Chat Room Name' 
-          onChange={ this.handleEditChange } 
-          value={ this.state.editRoomName }
-        />
-        <Button type='submit' bsStyle='warning' block><i className="fas fa-pen-square"></i> Edit Room Name</Button>
-      </Form>
+      <div>
+        <form className='submitRoomArea' onSubmit={this.handleEditSubmit}>
+          <TextField type='text' name='newRoom' 
+            defaultValue={ this.props.activeRoom.name} 
+            onChange={ this.handleEditChange } 
+            value={ this.state.editRoomName }
+            className='classListField'
+          />
+          <Button type='submit' variant="raised" color="secondary" className='classListButton editButton'><i className="fas fa-pen-square"></i> Edit Room Name</Button>
+        </form>
+      </div>
     ) : (
-      <Form className='submitRoomArea' onSubmit={ this.handleSubmit }>
-        <FormControl type='text' name='newRoom' placeholder='New Chat Room' 
-          onChange={ this.handleChange } 
-          value={ this.state.newRoom }
-        />
-        <Button type='submit' bsStyle='info' block><i className="fas fa-plus-circle"></i> Add Room</Button>
-      </Form>
+      <div>
+        <form className='submitRoomArea' onSubmit={ this.handleSubmit }>
+          <TextField type='text' name='newRoom' placeholder='New Chat Room' 
+            onChange={ this.handleChange } 
+            value={ this.state.newRoom }
+            className='classListField'
+          />
+          <Button type='submit' variant="raised" color="primary" className='classListButton'><i className="fas fa-plus-circle"></i> Add Room</Button>
+        </form>
+      </div>
     )
-
-    
 
     return (
       <div>
-        <Panel bsStyle='info' className='chatRoomArea'>
-          <Panel.Heading>
-            <Panel.Title componentClass="h3">Chat Rooms</Panel.Title>
-          </Panel.Heading>
-          <Panel.Body>
-            <ListGroup id='roomList'>
+        <div className='chatRoomArea'>
+          <div>
+            <Typography variant="headline" component="h3" color='primary'>Chat Rooms</Typography>
+          </div>
+          <div>
+            <MenuList id='roomList'>
               {
                 this.state.rooms.map( (room, index) => 
-                  <ListGroupItem 
+                  <MenuItem 
                     key={index} 
                     onClick={ (e) => this.props.selectRoom(room) }
                     className='roomItem'
                   >
-                  <span onClick={ () => this.handleDelete( room.key ) }><i className='fas fa-times-circle'> </i></span>
-                  { editButton }
-                  { room.name }
-                  </ListGroupItem>
+                    <span onClick={ () => this.handleDelete( room.key ) }><i color='primary' className='fas fa-times-circle'> </i></span>
+                    { editButton }
+                    <ListItemText>{ room.name }</ListItemText>
+                  </MenuItem>
                 )
               }
-            </ListGroup>
+            </MenuList>
             {editForm}
-          </Panel.Body>
-        </Panel>
+          </div>
+        </div>
       </div>
     )
   }

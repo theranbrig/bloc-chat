@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Row } from "react-bootstrap";
+import Button from '@material-ui/core/Button'
 
 class User extends Component {
   
@@ -27,16 +27,30 @@ class User extends Component {
   render() {
     return (
       <div className='userInfo'>
-        <Row>
-          <h4>Welcome: { this.props.currentUser }</h4>
-        </Row>
-        <Row>
+        <div>
+          <h4>Welcome { this.props.currentUser }</h4>
+        </div>
+        <div>
           {this.props.user === null ?
-          <Button bsStyle='info' onClick={ this.signIn.bind(this) }><i className="fas fa-user"></i> Sign In</Button>
+          <Button 
+            variant='raised' 
+            color='primary' 
+            onClick={ this.signIn.bind(this) }
+            className='classListButton'>
+            <i className="fas fa-user"></i> 
+            Sign In
+          </Button>
           :
-          <Button bsStyle='info' onClick={ this.signOut.bind(this) }><i className="fas fa-sign-out-alt"></i> Sign Out</Button>
+          <Button 
+            variant='raised' 
+            color='secondary' 
+            onClick={ this.signOut.bind(this) }
+            className='classListButton'>
+            <i className="fas fa-sign-out-alt"></i> 
+            Sign Out
+          </Button>
           }
-        </Row>
+        </div>
       </div>
     )
   }
