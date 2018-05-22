@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
+import { List, ListItem, ListItemText, Button, TextField, Typography, Chip, Paper } from "@material-ui/core";
 import * as moment from 'moment';
 
 class MessageList extends Component {
@@ -21,6 +15,7 @@ class MessageList extends Component {
     this.messagesRef = this.props.firebase.database().ref( `messages` );
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteAlert = this.deleteAlert.bind(this);
   }
 
   // Mount messages from database
@@ -39,8 +34,9 @@ class MessageList extends Component {
       })
       this.setState({
         messages: messageChanges,
-        activeMessages: this.state.messages.filter( message => message.roomId === this.props.activeRoom.key ) 
+        activeMessages: messageChanges.filter( message => message.roomId === this.props.activeRoom.key ) 
       })
+      console.log(messageChanges)
     })
   }
 
@@ -53,7 +49,10 @@ class MessageList extends Component {
     console.log(newProps);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(newProps) {
+    // if(this.props !== newProps) {
+    //   this.updateActiveMessages(newProps.activeRoom.key);
+    // }
     this.messagesEnd.scrollIntoView();
   }
   
@@ -92,23 +91,38 @@ class MessageList extends Component {
     this.messagesEnd.scrollIntoView()
   }
 
+  handleDelete(itemId) {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      this.messagesRef.child(itemId).remove(function(error) {
+        if (error) {
+          console.log(error);
+        }
+      });
+    }
+    console.log(itemId)
+  }
+
+  deleteAlert() {
+    alert('You do not have permission to delete this message!');
+  }
+
   render() {
     return (
       <div>
         <div className='wholeMessageArea'>
-          <div>
+          <Paper square>
             <Typography 
               variant="headline" 
               color='secondary' 
               component='h2'>
               { this.props.activeRoom === '' ? 'Choose a room to get started chatting.' : this.props.activeRoom.name }
             </Typography>
-          </div>
+          </Paper>
           <div>
             <List id='messageList'>
               { this.props.activeRoom === '' ?
                 <Typography 
-                  component='h3' 
+                  component='h2' 
                   variant='headline' 
                   color='secondary' 
                   className='noRoomSelected'>
@@ -117,13 +131,23 @@ class MessageList extends Component {
                 :
                 this.state.activeMessages.map( ( message, index ) => 
                   <ListItem
-                    key={index} 
+                    key={index}
+                    divider
+                    className='indvidualMessage' 
                   >
-                  <ListItemText 
+                  <ListItemText
+                    className={this.props.currentUser === message.username ? 'activeUser' : 'otherUser'}
                     primary={ message.content } 
                     secondary={ message.username }>
                   </ListItemText>
                   <Chip label={ moment(message.sentAt).format('LLL') }></Chip>
+                  <span onClick={ this.props.currentUser === message.username ?
+                      () => this.handleDelete( message.message )
+                    :
+                      this.deleteAlert
+                    }
+                  >
+                  <i className='fas fa-times-circle'> </i></span>
                   </ListItem>
                 )
               }
