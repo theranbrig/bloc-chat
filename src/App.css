@@ -1,63 +1,37 @@
-.App {
+body {
     text-align: center;
     margin: 0 auto;
-    /* background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); */
-}
-
-.App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 80px;
-}
-
-.App-header {
-    background-color: #222;
-    height: 150px;
-    padding: 20px;
-    color: white;
-}
-
-.App-title {
-    font-size: 1.5em;
-}
-
-.App-intro {
-    font-size: large;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    height: 100%;
+    /* background: #e6f4f1; */
 }
 
 #roomList {
     height: 400px;
     overflow-y: scroll;
+    background: whitesmoke;
 }
 
 #messageList {
-    height: 514px;
+    height: 513px;
     overflow-y: scroll;
 }
 
-.noRoomSelected {
+.noRoomSelected h2 {
     height: 100%;
     font-size: 2em;
 }
 
 .MuiGrid-spacing-xs-8-22>.MuiGrid-item-2 {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .fas {
     margin-right: 5px;
 }
 
-.roomItem>span {
-    margin-right: 4px;
+.roomItem>span,
+.MuiListItem-root-202>span {
+    margin: 0 4px;
     text-align: center;
     width: 0;
     display: inline-flex;
@@ -74,7 +48,8 @@
     color: #00bcd4;
 }
 
-.roomItem:hover>span {
+.roomItem:hover>span,
+.MuiListItem-root-202:hover>span {
     display: inline-block;
     width: 20px;
     opacity: 1;
@@ -84,11 +59,15 @@
     padding: 8px 0;
 }
 
-.list-group-item {
+/* Long room name styling */
+
+.roomItem h3 {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+/* Buttons */
 
 .classListField,
 .classListButton,
@@ -96,16 +75,39 @@
     width: 100%;
 }
 
-/* .MuiButton-flatPrimary-155,
-.MuiButton-root-153 {
-    color: #00bcd4 !important;
-}
-
-.MuiAppBar-colorPrimary-98 {
-    background-color: #00bcd4 !important;
-    color: #ff4081
-} */
+/* Text inputs*/
 
 .MuiInput-input-195 {
     margin-left: 10px !important;
+}
+
+.activeUser p {
+    color: #00bcd4;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.otherUser p {
+    color: #e91e63
+}
+
+.MuiTypography-root-129.noRoomSelected {
+    margin-top: 200px;
+}
+
+/* .wholeMessageArea .MuiPaper-root-100 {
+    background: #e91e63 !important;
+} */
+
+#messageList,
+#roomList {
+    background: whitesmoke !important;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.userName {
+    padding: 14px 0;
 }

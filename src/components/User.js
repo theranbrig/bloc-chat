@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button'
+import { Typography, Button } from '@material-ui/core';
 
 class User extends Component {
   
@@ -27,8 +27,8 @@ class User extends Component {
   render() {
     return (
       <div className='userInfo'>
-        <div>
-          <h4>Welcome { this.props.currentUser }</h4>
+        <div className='userName'>
+          <Typography component='h1' variant='headline'>Welcome { this.props.currentUser }</Typography>
         </div>
         <div>
           {this.props.user === null ?

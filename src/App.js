@@ -4,24 +4,16 @@ import * as firebase from 'firebase'
 import RoomList from './components/RoomList'
 import MessageList from './components/MessageList'
 import User from "./components/User";
-import Grid from '@material-ui/core/Grid';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { pink, cyan } from '@material-ui/core/colors';
 
-// First we need the theme provider and the theme creator
-import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
-
-// For this example I'll also be using the amber and blue color profiles
-import pink from '@material-ui/core/colors/pink';
-import blue from '@material-ui/core/colors/cyan';
-
-// Now let us create our theme
+// MuiTheme for app
 
 const theme = createMuiTheme({
     palette: {
         type: 'light',
-        primary: blue,
+        primary: cyan,
         secondary: pink
     }
 });

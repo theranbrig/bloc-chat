@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import { MenuList, MenuItem, ListItemText, Typography, Button, TextField, Paper } from "@material-ui/core";
 
 class RoomList extends Component {
   constructor(props) {
@@ -55,14 +50,16 @@ class RoomList extends Component {
 
   handleEditSubmit(e) {
     e.preventDefault();
-    console.log('You edited the room');
-    this.roomsRef.child(this.props.activeRoom.key).set({
-      name: this.state.editRoomName
-    })
-    this.setState({
-      editRoomName: '',
-      editMode: false
-    })
+    if (this.state.editRoomName !== '') {
+      console.log('You edited the room');
+      this.roomsRef.child(this.props.activeRoom.key).set({
+        name: this.state.editRoomName
+      })
+      this.setState({
+        editRoomName: '',
+        editMode: false
+      })
+    }
   }
 
   // Handle input change function
@@ -80,10 +77,12 @@ class RoomList extends Component {
     const room = {
       name: this.state.newRoom
     }
-    this.roomsRef.push(room);
-    this.setState({
-      newRoom: ''
-    })
+    if( room.name !== '') {
+      this.roomsRef.push(room);
+      this.setState({
+        newRoom: ''
+      })
+    }
   }
 
   handleDelete(itemId) {
@@ -124,7 +123,14 @@ class RoomList extends Component {
             value={ this.state.editRoomName }
             className='classListField'
           />
-          <Button type='submit' variant="raised" color="secondary" className='classListButton editButton'><i className="fas fa-pen-square"></i> Edit Room Name</Button>
+          <Button 
+            type='submit' 
+            variant="raised" 
+            color="secondary" 
+            className='classListButton editButton'>
+            <i className="fas fa-pen-square"></i> 
+            Edit Room Name
+          </Button>
         </form>
       </div>
     ) : (
@@ -135,7 +141,14 @@ class RoomList extends Component {
             value={ this.state.newRoom }
             className='classListField'
           />
-          <Button type='submit' variant="raised" color="primary" className='classListButton'><i className="fas fa-plus-circle"></i> Add Room</Button>
+          <Button 
+            type='submit' 
+            variant="raised" 
+            color="primary" 
+            className='classListButton'>
+            <i className="fas fa-plus-circle"></i> 
+            Add Room
+          </Button>
         </form>
       </div>
     )
@@ -143,9 +156,9 @@ class RoomList extends Component {
     return (
       <div>
         <div className='chatRoomArea'>
-          <div>
+          <Paper>
             <Typography variant="headline" component="h3" color='primary'>Chat Rooms</Typography>
-          </div>
+          </Paper>
           <div>
             <MenuList id='roomList'>
               {
@@ -155,7 +168,7 @@ class RoomList extends Component {
                     onClick={ (e) => this.props.selectRoom(room) }
                     className='roomItem'
                   >
-                    <span onClick={ () => this.handleDelete( room.key ) }><i color='primary' className='fas fa-times-circle'> </i></span>
+                    <span onClick={ () => this.handleDelete( room.key ) }><i className='fas fa-times-circle'> </i></span>
                     { editButton }
                     <ListItemText>{ room.name }</ListItemText>
                   </MenuItem>
