@@ -108,79 +108,78 @@ class MessageList extends Component {
 
   render() {
     return (
-      <div>
-        <div className='wholeMessageArea'>
-          <Paper square>
+      <div className='wholeMessageArea'>
+        <Paper square>
+          <Typography 
+            variant="headline" 
+            color='secondary' 
+            component='h2'>
+            { this.props.activeRoom === '' ? 'Choose a room to get started chatting.' : this.props.activeRoom.name }
+          </Typography>
+        </Paper>
+        <List id='messageList'>
+          { this.props.activeRoom === '' ?
             <Typography 
-              variant="headline" 
+              component='h2' 
+              variant='headline' 
               color='secondary' 
-              component='h2'>
-              { this.props.activeRoom === '' ? 'Choose a room to get started chatting.' : this.props.activeRoom.name }
+              className='noRoomSelected'>
+              No Room Selected
             </Typography>
-          </Paper>
-          <div>
-            <List id='messageList'>
-              { this.props.activeRoom === '' ?
-                <Typography 
-                  component='h2' 
-                  variant='headline' 
-                  color='secondary' 
-                  className='noRoomSelected'>
-                  No Room Selected
-                </Typography>
+            :
+            this.state.activeMessages.map( ( message, index ) => 
+              <ListItem
+                key={index}
+                divider
+                className='indvidualMessage' 
+              >
+              <ListItemText
+                className={this.props.currentUser === message.username ? 'activeUser' : 'otherUser'}
+                primary={ message.content } 
+                secondary={ message.username }>
+              </ListItemText>
+              <Chip label={ moment(message.sentAt).format('MMMM Do, h:mm a') }></Chip>
+              <span onClick={ this.props.currentUser === message.username ?
+                  () => this.handleDelete( message.message )
                 :
-                this.state.activeMessages.map( ( message, index ) => 
-                  <ListItem
-                    key={index}
-                    divider
-                    className='indvidualMessage' 
-                  >
-                  <ListItemText
-                    className={this.props.currentUser === message.username ? 'activeUser' : 'otherUser'}
-                    primary={ message.content } 
-                    secondary={ message.username }>
-                  </ListItemText>
-                  <Chip label={ moment(message.sentAt).format('LLL') }></Chip>
-                  <span onClick={ this.props.currentUser === message.username ?
-                      () => this.handleDelete( message.message )
-                    :
-                      this.deleteAlert
-                    }
-                  >
-                  <i className='fas fa-times-circle'> </i></span>
-                  </ListItem>
-                )
-              }
-              <div style={{ float:"left", clear: "both" }}
-                ref={(el) => { this.messagesEnd = el; }}>
-              </div>
-            </List>
-            <div>
-              <form className='submitMessageArea'>
-                <TextField 
-                  type='text'
-                  placeholder='Enter Message' 
-                  onChange={ this.handleChange } 
-                  value={ this.state.newMessageContent }
-                  className='messageInput'
-                  fullWidth
-                />
-                <Button 
-                  type='submit' 
-                  onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow }
-                  variant="raised" 
-                  color="primary"
-                  className='messageButton'
-                >
-                  <i className="fas fa-paper-plane"></i> Send
-                </Button>
-              </form>
-            </div>
+                  this.deleteAlert
+                }
+              >
+              <i className='fas fa-times-circle'> </i></span>
+              </ListItem>
+            )
+          }
+          <div style={{ float:"left", clear: "both" }}
+            ref={(el) => { this.messagesEnd = el; }}>
           </div>
-        </div>
+        </List>
+        <form className='submitMessageArea'>
+          <TextField 
+            type='text'
+            onChange={ this.handleChange } 
+            value={ this.state.newMessageContent }
+            className='messageInput'
+            label='Enter Message'
+            fullWidth
+          />
+          <Button 
+            type='submit' 
+            onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow }
+            variant="raised" 
+            color="primary"
+            className='messageButton'
+          >
+            <i className="fas fa-paper-plane"></i> Send
+          </Button>
+        </form>
       </div>
     )
   }
 }
 
 export default MessageList
+
+
+
+      
+      

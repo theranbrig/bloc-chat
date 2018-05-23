@@ -118,28 +118,30 @@ class RoomList extends Component {
       <div>
         <form className='submitRoomArea' onSubmit={this.handleEditSubmit}>
           <TextField type='text' name='newRoom' 
-            defaultValue={ this.props.activeRoom.name} 
             onChange={ this.handleEditChange } 
             value={ this.state.editRoomName }
             className='classListField'
+            label='Edit Room Name'
           />
           <Button 
             type='submit' 
             variant="raised" 
             color="secondary" 
-            className='classListButton editButton'>
+            className='classListButton editButton'
+            >
             <i className="fas fa-pen-square"></i> 
-            Edit Room Name
+            Edit Name
           </Button>
         </form>
       </div>
     ) : (
       <div>
         <form className='submitRoomArea' onSubmit={ this.handleSubmit }>
-          <TextField type='text' name='newRoom' placeholder='New Chat Room' 
-            onChange={ this.handleChange } 
+          <TextField type='text' name='newRoom'
+            onChange={ this.handleChange }
             value={ this.state.newRoom }
             className='classListField'
+            label='New Room Name'
           />
           <Button 
             type='submit' 
@@ -154,12 +156,10 @@ class RoomList extends Component {
     )
 
     return (
-      <div>
-        <div className='chatRoomArea'>
+        <section className='chatRoomArea'>
           <Paper>
             <Typography variant="headline" component="h3" color='primary'>Chat Rooms</Typography>
           </Paper>
-          <div>
             <MenuList id='roomList'>
               {
                 this.state.rooms.map( (room, index) => 
@@ -176,9 +176,7 @@ class RoomList extends Component {
               }
             </MenuList>
             {editForm}
-          </div>
-        </div>
-      </div>
+        </section>
     )
   }
 }
