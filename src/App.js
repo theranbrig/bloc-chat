@@ -10,6 +10,18 @@ import { pink, cyan } from '@material-ui/core/colors';
 
 // MuiTheme for app
 
+// const theme = createMuiTheme({
+//     palette: {
+//         type: 'light',
+//         primary: {
+//           main: '#72C4D3' 
+//         },
+//         secondary: {
+//           main: "#E197A1"
+//         }
+//     }
+// });
+
 const theme = createMuiTheme({
     palette: {
         type: 'light',
@@ -55,7 +67,7 @@ class App extends Component {
     return (
     <MuiThemeProvider theme={theme}>
       <Grid className="App">
-        <Grid justify='center' container spacing={8}>
+        <Grid justify='flex-start' container spacing={8}>
           <AppBar position='static' color='primary'>
             <Toolbar>
               <Typography variant='title' color="inherit" aria-label="Menu"><i className="far fa-comment"></i> Bloc Chat</Typography>
@@ -76,7 +88,7 @@ class App extends Component {
             />
           </Grid>
         {/* Chat Area */}
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={9} className='rightArea'>
             <MessageList 
               firebase={firebase} 
               activeRoom={ this.state.activeRoom }
