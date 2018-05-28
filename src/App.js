@@ -82,9 +82,9 @@ class App extends Component {
               user={ this.state.user }
             />
             <RoomList 
-            firebase={firebase} 
-            activeRoom={ this.state.activeRoom } 
-            selectRoom={ this.selectRoom.bind(this) }
+              firebase={firebase} 
+              activeRoom={ this.state.activeRoom } 
+              selectRoom={ this.selectRoom.bind(this) }
             />
           </Grid>
         {/* Chat Area */}

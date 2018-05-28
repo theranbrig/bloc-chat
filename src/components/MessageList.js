@@ -50,9 +50,6 @@ class MessageList extends Component {
   }
 
   componentDidUpdate(newProps) {
-    // if(this.props !== newProps) {
-    //   this.updateActiveMessages(newProps.activeRoom.key);
-    // }
     this.messagesEnd.scrollIntoView();
   }
   
