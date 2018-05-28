@@ -13,7 +13,7 @@ class User extends Component {
   }
 
   signOut () {
-    console.log('Hi');
+    console.log('clickSignOut');
     this.props.firebase.auth().signOut();
     this.setState({ user: null })
   }
