@@ -3,7 +3,7 @@ import { List, ListItem, ListItemText, Button, TextField, Typography, Chip, Pape
 import * as moment from 'moment';
 
 class MessageList extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,7 @@ class MessageList extends Component {
       })
       this.setState({
         messages: messageChanges,
-        activeMessages: messageChanges.filter( message => message.roomId === this.props.activeRoom.key ) 
+        activeMessages: messageChanges.filter( message => message.roomId === this.props.activeRoom.key )
       })
       console.log(messageChanges)
     })
@@ -52,7 +52,7 @@ class MessageList extends Component {
   componentDidUpdate(newProps) {
     this.messagesEnd.scrollIntoView();
   }
-  
+
   // Send new message handlers
 
   handleChange(e) {
@@ -79,7 +79,7 @@ class MessageList extends Component {
   }
 
   // Update active room message list
-  
+
   updateActiveMessages(activeRoomKey) {
     this.setState({ activeMessages: this.state.messages.filter( message => message.roomId === activeRoomKey ) });
   }
@@ -107,32 +107,32 @@ class MessageList extends Component {
     return (
       <div className='wholeMessageArea'>
         <Paper square>
-          <Typography 
-            variant="headline" 
-            color='secondary' 
+          <Typography
+            variant="headline"
+            color='secondary'
             component='h2'>
             { this.props.activeRoom === '' ? 'Choose a room to get started chatting.' : this.props.activeRoom.name }
           </Typography>
         </Paper>
         <List id='messageList'>
           { this.props.activeRoom === '' ?
-            <Typography 
-              component='h2' 
-              variant='headline' 
-              color='secondary' 
+            <Typography
+              component='h2'
+              variant='headline'
+              color='secondary'
               className='noRoomSelected'>
               No Room Selected
             </Typography>
             :
-            this.state.activeMessages.map( ( message, index ) => 
+            this.state.activeMessages.map( ( message, index ) =>
               <ListItem
                 key={index}
                 divider
-                className='indvidualMessage' 
+                className='individualMessage'
               >
               <ListItemText
                 className={this.props.currentUser === message.username ? 'activeUser' : 'otherUser'}
-                primary={ message.content } 
+                primary={ message.content }
                 secondary={ message.username }>
               </ListItemText>
               <Chip label={ moment(message.sentAt).format('MMMM Do, h:mm a') }></Chip>
@@ -151,18 +151,18 @@ class MessageList extends Component {
           </div>
         </List>
         <form className='submitMessageArea'>
-          <TextField 
+          <TextField
             type='text'
-            onChange={ this.handleChange } 
+            onChange={ this.handleChange }
             value={ this.state.newMessageContent }
             className='messageInput'
             label='Enter Message'
             fullWidth
           />
-          <Button 
-            type='submit' 
+          <Button
+            type='submit'
             onClick={ this.props.activeRoom !== '' ? this.handleSubmit : this.handleShow }
-            variant="raised" 
+            variant="raised"
             color="primary"
             className='messageButton'
           >
@@ -178,5 +178,5 @@ export default MessageList
 
 
 
-      
-      
+
+
