@@ -1,21 +1,30 @@
 {
-  "name": "bloc-chat",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^1.0.0",
-    "@material-ui/icons": "^1.0.0",
-    "ajv": "^6.5.0",
-    "firebase": "^5.0.2",
-    "moment": "^2.22.1",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+	"name": "bloc-chat",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@material-ui/core": "^1.0.0",
+		"@material-ui/icons": "^1.0.0",
+		"ajv": "^6.5.0",
+		"firebase": "^5.0.2",
+		"moment": "^2.22.1",
+		"react": "^16.3.2",
+		"react-dom": "^16.3.2",
+		"react-scripts": "1.1.4"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject",
+		"precommit": "pretty-quick staged"
+	},
+	"devDependencies": {
+		"@types/react": "^16.4.7",
+		"@types/react-dom": "^16.0.6",
+		"eslint-plugin-prettier": "^2.6.2",
+		"husky": "^0.14.3",
+		"prettier": "^1.14.0",
+		"pretty-quick": "^1.6.0"
+	}
 }
