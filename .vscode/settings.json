@@ -1,7 +1,7 @@
 {
-	"files.associations": {
-		"*.js": "javascriptreact"
-	},
-	"editor.formatOnSave": true,
-	"prettier.singleQuote": true
+  "files.associations": {
+    "*.js": "javascriptreact"
+  },
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true
 }

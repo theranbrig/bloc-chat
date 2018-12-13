@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Typography, Button } from '@material-ui/core';
+import firebase from 'firebase';
+
+require('dotenv').config();
 
 class User extends Component {
 	signIn() {
-		console.log('clickSignIn');
-		const provider = new this.props.firebase.auth.GoogleAuthProvider();
-		this.props.firebase
+		const provider = new firebase.auth.GoogleAuthProvider();
+		firebase
 			.auth()
 			.signInWithPopup(provider)
 			.then(result => {
@@ -15,13 +17,12 @@ class User extends Component {
 	}
 
 	signOut() {
-		console.log('clickSignOut');
 		this.props.firebase.auth().signOut();
 		this.setState({ user: null });
 	}
 
 	componentDidMount() {
-		this.props.firebase.auth().onAuthStateChanged(user => {
+		firebase.auth().onAuthStateChanged(user => {
 			this.props.setUser(user);
 		});
 	}
@@ -40,8 +41,7 @@ class User extends Component {
 							variant="raised"
 							color="primary"
 							onClick={this.signIn.bind(this)}
-							className="classListButton"
-						>
+							className="classListButton">
 							<i className="fas fa-user" />
 							Sign In
 						</Button>
@@ -50,8 +50,7 @@ class User extends Component {
 							variant="raised"
 							color="secondary"
 							onClick={this.signOut.bind(this)}
-							className="classListButton"
-						>
+							className="classListButton">
 							<i className="fas fa-sign-out-alt" />
 							Sign Out
 						</Button>

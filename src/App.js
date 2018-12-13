@@ -8,6 +8,8 @@ import { Grid, AppBar, Toolbar, Typography } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { pink, cyan } from '@material-ui/core/colors';
 
+require('dotenv').config();
+
 const theme = createMuiTheme({
 	palette: {
 		type: 'light',
@@ -18,13 +20,13 @@ const theme = createMuiTheme({
 
 // Firebase initialization
 
-var config = {
-	apiKey: 'AIzaSyA4vsRfJ1E3ZqwI2-CxX7nVyjIq3fhYq7c',
-	authDomain: 'bloc-chat-790f9.firebaseapp.com',
-	databaseURL: 'https://bloc-chat-790f9.firebaseio.com',
-	projectId: 'bloc-chat-790f9',
-	storageBucket: 'bloc-chat-790f9.appspot.com',
-	messagingSenderId: '703348039153'
+const config = {
+	apiKey: process.env.REACT_APP_API_KEY,
+	authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+	databaseURL: process.env.REACT_APP_DATABASE_URL,
+	projectId: process.env.REACT_APP_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
 };
 firebase.initializeApp(config);
 
@@ -66,11 +68,7 @@ class App extends Component {
 							<User
 								firebase={firebase}
 								setUser={this.setUser.bind(this)}
-								currentUser={
-									this.state.user === null
-										? 'Guest'
-										: this.state.user.displayName
-								}
+								currentUser={this.state.user === null ? 'Guest' : this.state.user.displayName}
 								user={this.state.user}
 							/>
 							<RoomList
@@ -84,11 +82,7 @@ class App extends Component {
 							<MessageList
 								firebase={firebase}
 								activeRoom={this.state.activeRoom}
-								currentUser={
-									this.state.user === null
-										? 'Guest'
-										: this.state.user.displayName
-								}
+								currentUser={this.state.user === null ? 'Guest' : this.state.user.displayName}
 							/>
 						</Grid>
 					</Grid>
