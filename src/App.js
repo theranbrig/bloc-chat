@@ -18,7 +18,7 @@ const theme = createMuiTheme({
   }
 });
 
-// Firebase initialization
+// Firebase initialization with variables
 
 const config = {
   apiKey: process.env.REACT_APP_API_KEY,
